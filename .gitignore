@@ -1,0 +1,6 @@
+models/*.xmi
+models/*.ecore
+output/*.txt
+output/*.dot
+output/*.pdf
+target/
