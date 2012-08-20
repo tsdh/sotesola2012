@@ -9,15 +9,18 @@
   (included in `lib/`).  That's the job of the `build-jamopp-graphs.sh` bash
   script.
 
+  Thereafter, the folder `models/` contains one xmi file per 101 implementation
+  containing java files.  You'll get an error for some projects, e.g., all
+  AntLR implementation, because the generated AntLR parsers contain characters
+  that are not valid in XML and thus the XMI serialization fails. :-(
+
+  Do it like so:
+
 ```
 cd scripts/
 ./build-jamopp-graphs.sh ~/path/to/101repo/contributions
 ```
 
-  Thereafter, the folder `models/` contains one xmi file per 101 implementation
-  containing java files.  You'll get an error for some projects, e.g., all
-  AntLR implementation, because the generated AntLR parsers contain characters
-  that are not valid in XML and thus the XMI serialization fails. :-(
 
 ## License
 
