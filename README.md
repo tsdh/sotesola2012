@@ -34,6 +34,9 @@ it'll take care of every other dependency needed.  Simply download the `lein`
 script [here](https://raw.github.com/technomancy/leiningen/preview/bin/lein),
 make it executable, and place it somewhere on your `PATH`.
 
+Oh, and for the diagram generation, you also need the
+[GraphViz](http://www.graphviz.org/) program `dot` somewhere on your `PATH`.
+
 ## Usage
 
 Parse every 101companies implementation that contains at least one java file
