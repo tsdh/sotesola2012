@@ -12,13 +12,26 @@
   Thereafter, the folder `models/` contains one xmi file per 101 implementation
   containing java files.  You'll get an error for some projects, e.g., all
   AntLR implementation, because the generated AntLR parsers contain characters
-  that are not valid in XML and thus the XMI serialization fails. :-(
+  that are not valid in XML and thus the XMI serialization fails.  There might
+  be more errors, but at least I can parse 46 implementations here...
 
   Do it like so:
 
 ```
-cd scripts/
-./build-jamopp-graphs.sh ~/path/to/101repo/contributions
+$ pwd
+/path/to/sotesola2012
+$ cd scripts/
+$ ./build-jamopp-graphs.sh ~/path/to/101repo/contributions
+```
+
+- Calculate the metrics!  You'll get one txt file in `output/` per 101
+  implementation which lists the metric values for any class of that
+  implementation.
+  
+```
+$ pwd
+/path/to/sotesola2012
+$ lein run
 ```
 
 
