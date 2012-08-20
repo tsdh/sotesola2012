@@ -1,6 +1,11 @@
-# Problems & Solutions
+# Tassilo's SoTeSoLa 2012 Contribution
 
+## Prerequisites
 
+You need the [Leiningen](http://leiningen.org) build management tool.  Simply
+download the `lein` script
+[here](https://raw.github.com/technomancy/leiningen/preview/bin/lein), make it
+executable, and place it somewhere on your `PATH`.
 
 ## Usage
 
