@@ -71,8 +71,9 @@
         (println "done!")
         (println "FAILED!"))
       (clojure.java.shell/sh "rm" dotfile)
-      (catch Exception _
-        (println "FAILED!")))))
+      (catch Exception e
+        (println "FAILED!")
+        (.printStackTrace e)))))
 
 (defn -main []
   (do-all))

@@ -57,6 +57,7 @@
   java.lang.Number, so that its DIT is actually 2, not 1."
   [t]
   (let [supers (reachables t [p-seq :extends [p-opt :classifierReferences] :target])
+        ;; Because Object extends itself...
         supers (disj supers t)]
     (cond
      (seq supers) (inc (apply max (map depth-of-inheritance-tree supers)))
