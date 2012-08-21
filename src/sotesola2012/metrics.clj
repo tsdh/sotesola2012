@@ -142,18 +142,26 @@
 
 ;;*** Response for a Class
 
+(defn methods-of-class [c]
+  (reachables c [p-seq  :members
+                 [p-restr 'members.ClassMethod]]))
+
 (defn response-set
   "Returns the response set of the given type t."
   [t]
-  (let [own-methods (reachables t [p-seq  :members
-                                   [p-restr 'members.ClassMethod]])
+  (let [own-methods (methods-of-class t)
+        inherited-methods (mapcat methods-of-class
+                                  (reachables t [p-seq :extends
+                                                 [p-opt :classifierReferences]
+                                                 :target]))
+        all-methods (into own-methods inherited-methods)
         called-methods (mapcat
                         #(reachables % [p-seq :statements
                                         [p-* <>--]
                                         [p-restr 'references.MethodCall]
                                         :target])
-                        own-methods)]
-    (into own-methods called-methods)))
+                        all-methods)]
+    (into all-methods called-methods)))
 
 (defn classes-by-response-for-a-class
   [g]
