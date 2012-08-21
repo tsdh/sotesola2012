@@ -121,7 +121,7 @@
 
 (defn subtypes
   "Returns all direct subtypes of the given type t that are contained in
-  classifiers."
+  classes."
   [classes t]
   ;; Well, this is pretty slow, because all the needed references are
   ;; unidirectional.  You can get the superclass quickly, but getting
@@ -137,8 +137,8 @@
 
 (defn classes-by-number-of-children
   [m]
-  (let [jg-classes (*get-classes-fn* m)]
-    (apply-metric m #(count (subtypes jg-classes %)))))
+  (let [all-classes (*get-classes-fn* m)]
+    (apply-metric m #(count (subtypes all-classes %)))))
 
 ;;*** Response for a Class
 
@@ -147,12 +147,12 @@
   [t]
   (let [own-methods (reachables t [p-seq  :members
                                    [p-restr 'members.ClassMethod]])
-        called-methods (set (mapcat
-                             #(reachables % [p-seq :statements
-                                             [p-* <>--]
-                                             [p-restr 'references.MethodCall]
-                                             :target])
-                             own-methods))]
+        called-methods (mapcat
+                        #(reachables % [p-seq :statements
+                                        [p-* <>--]
+                                        [p-restr 'references.MethodCall]
+                                        :target])
+                        own-methods)]
     (into own-methods called-methods)))
 
 (defn classes-by-response-for-a-class
@@ -178,9 +178,10 @@
                                                  methods))
         combinations (loop [ms methods, pairs []]
                        (if (next ms)
-                         (recur (rest ms) (concat pairs
-                                                  (map (fn [n] [(first ms) n])
-                                                       (rest ms))))
+                         (recur (rest ms)
+                                (concat pairs
+                                        (map (fn [n] [(first ms) n])
+                                             (rest ms))))
                          pairs))
         results (for [[m1 m2] combinations
                       :let [f1 (method-field-map m1)
