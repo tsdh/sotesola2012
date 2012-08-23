@@ -182,9 +182,17 @@
                                          [p-restr 'java.references.IdentifierReference]
                                          :target
                                          [p-restr nil #(member? % fields)]]))
-        method-field-map (apply hash-map (mapcat (fn [m] [m (accessed-fields m)])
-                                                 methods))
-        combinations (loop [ms methods, pairs []]
+        method-field-map (apply hash-map (mapcat
+                                          (fn [m]
+                                            ;; Don't recognize methods
+                                            ;; that access no fields at
+                                            ;; all.
+                                            (let [af (accessed-fields m)]
+                                              (if (seq af)
+                                                [m af]
+                                                [])))
+                                          methods))
+        combinations (loop [ms (keys method-field-map), pairs []]
                        (if (next ms)
                          (recur (rest ms)
                                 (concat pairs
