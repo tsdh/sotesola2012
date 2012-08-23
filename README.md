@@ -36,13 +36,19 @@ make it executable, and place it somewhere on your `PATH`.
 
 Oh, and for the diagram generation, you also need the
 [GraphViz](http://www.graphviz.org/) program `dot` somewhere on your `PATH`.
+The parser invocation script `build-jamopp-graphs.sh` is a BASH script, so
+it'll only run on unices or windows with cygwin.
 
 ## Usage
 
 Parse every 101companies implementation that contains at least one java file
 into a java graph using EMFText's [JaMoPPC](http://www.jamopp.org) parser
 (included in `lib/`).  That's the job of the `build-jamopp-graphs.sh` bash
-script.
+script.  If an implementation needs to be built beforehand using ant or make,
+this script will do that for you.  However, some implementations encode
+absolute paths in their build scripts or rely on external plugins or libraries
+which may or man not be installed.  Thus, for some of them building might
+fail...
 
 Thereafter, the folder `models/` contains one xmi file per 101 implementation
 containing java files.  You'll get an error for some projects, e.g., all AntLR
