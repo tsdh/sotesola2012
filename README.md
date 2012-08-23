@@ -20,10 +20,43 @@ To solve the two problems stated above, the
 model querying and transformation library for TGraphs and EMF models written in
 Clojure.
 
+### Kemerer and Chidamber Complexity Metrics
+
 For every class in each syntax graph, all six **Kemerer and Chidamber
-complexity metrics** are calculated.  All metric values are aggregated over all
-101 implementations, and so you'll also get a ranking of the 10 most complex
-classes in the complete 101 corpus concerning each metric.
+complexity metrics** are calculated.  Those metrics are:
+
+1. *Depth Of Inheritance Tree (DIT)*: Computes the maximum number of
+   superclasses (or super-interfaces) until reaching `java.lang.Object`.  This
+   metric is also computed for interfaces here.
+
+2. *Coupling Between Objects (CBO)*: Computes the number of classes coupled to
+   a given class.  A class C is coupled to a given class G if G accesses fields
+   of C or calls methods of C.
+
+3. *Weighted Methods Per Class (WMC)*: Computes the sum of all method
+   complexities of a class.  As method complexity metric I use the cyclomatic
+   complexity.
+
+4. *Number Of Children (NOC)*: Computes the number of immediate subclasses of a
+   given class.  This metric is also computed for interfaces here, where the
+   value is the number of immediate sub-interfaces.
+
+5. *Response For A Class (RFC)*: Computes the number of methods that might be
+   called in response to a received message, that is, the number of all methods
+   defined in that class, all inherited methods, plus all methods that are
+   called by own or inherited methods.
+
+6. *Lack Of Cohesion In Object Methods (LCOM)*: Pair-wise checks if two methods
+   of a given class access disjoint sets of own fields.  The metric value is
+   the number of disjoint-field pairs minus the number method pairs accessing
+   at least one common field.  If there are more common-field pairs than
+   disjoint-field pairs, the metric value is 0.
+
+All metric values are aggregated over all 101 implementations, and so you'll
+also get a ranking of the 10 most complex classes in the complete 101 corpus
+concerning each metric.
+
+### Simple UML Class Diagrams
 
 Furthermore, for each 101 implementation, a **UML-alike diagram** is generated
 showing all classes and interfaces including generalization, implementation,
