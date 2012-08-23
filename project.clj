@@ -5,5 +5,5 @@
             :url "http://www.gnu.org/copyleft/gpl.html"
             :distribution :repo}
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [funnyqt "0.2.6"]]
+                 [funnyqt "0.3.0"]]
   :main sotesola2012.main)

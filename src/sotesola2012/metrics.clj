@@ -80,13 +80,13 @@
      ;; :statements for ClassMethods, :initialValue for Fields
      [p-alt :statements :initialValue]
      [p-* [<>--]]
-     [p-restr '[references.MethodCall references.IdentifierReference]]
+     [p-restr '[java.references.MethodCall java.references.IdentifierReference]]
      ;; Matches both the ClassMethod that is the target of a MethodCall as well
      ;; as the Field that is the target of a IdentifierReference
      :target
-     [p-restr '[members.ClassMethod members.Field]]
+     [p-restr '[java.members.ClassMethod java.members.Field]]
      --<>
-     [p-restr 'Class #(not (= c %1))]]))
+     [p-restr 'java.classifiers.Class #(not (= c %1))]]))
 
 (defn classes-by-coupling-between-objects
   [g]
@@ -100,9 +100,9 @@
   (-> (reachables
        m [p-seq :statements
           [p-* <>--]
-          [p-restr '[statements.NormalSwitchCase statements.DefaultSwitchCase
-                     statements.Condition statements.ForLoop
-                     statements.DoWhileLoop statements.WhileLoop]]])
+          [p-restr '[java.statements.NormalSwitchCase java.statements.DefaultSwitchCase
+                     java.statements.Condition java.statements.ForLoop
+                     java.statements.DoWhileLoop java.statements.WhileLoop]]])
       count
       inc))
 
@@ -111,7 +111,7 @@
   [c]
   (reduce + (map cyclomatic-complexity
                  (reachables c [p-seq :members
-                                      [p-restr 'members.Method]]))))
+                                      [p-restr 'java.members.Method]]))))
 
 (defn classes-by-weighted-methods-per-class
   [g]
@@ -144,7 +144,7 @@
 
 (defn methods-of-class [c]
   (reachables c [p-seq  :members
-                 [p-restr 'members.ClassMethod]]))
+                 [p-restr 'java.members.ClassMethod]]))
 
 (defn response-set
   "Returns the response set of the given type t."
@@ -158,7 +158,7 @@
         called-methods (mapcat
                         #(reachables % [p-seq :statements
                                         [p-* <>--]
-                                        [p-restr 'references.MethodCall]
+                                        [p-restr 'java.references.MethodCall]
                                         :target])
                         all-methods)]
     (into all-methods called-methods)))
@@ -173,13 +173,13 @@
   "Returns the lack of cohesion metric value of t."
   [t]
   (let [fields (reachables t [p-seq :members
-                              [p-restr 'members.Field]])
+                              [p-restr 'java.members.Field]])
         methods (reachables t [p-seq :members
-                               [p-restr 'members.ClassMethod]])
+                               [p-restr 'java.members.ClassMethod]])
         accessed-fields (fn [m]
                           (reachables m [p-seq :statements
                                          [p-* <>--]
-                                         [p-restr 'references.IdentifierReference]
+                                         [p-restr 'java.references.IdentifierReference]
                                          :target
                                          [p-restr nil #(member? % fields)]]))
         method-field-map (apply hash-map (mapcat (fn [m] [m (accessed-fields m)])
