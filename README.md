@@ -76,10 +76,11 @@ make it executable, and place it somewhere on your `PATH`.
 Since the metrics calculation uses the ForkJoin framework for parallelizing the
 computation, you need a JDK7 (or newer).
 
-Oh, and for the diagram generation, you also need the
+For the diagram generation, you also need the
 [GraphViz](http://www.graphviz.org/) program `dot` somewhere on your `PATH`.
-The parser invocation script `build-jamopp-graphs.sh` is a BASH script, so
-it'll only run on unices or windows with cygwin.
+
+Finally, the parser invocation script `build-jamopp-graphs.sh` is a BASH
+script, so it'll only run on unices or windows with cygwin.
 
 ## Usage
 
@@ -89,7 +90,7 @@ into a java graph using EMFText's [JaMoPPC](http://www.jamopp.org) parser
 script.  If an implementation needs to be built beforehand using ant or make,
 this script will do that for you.  However, some implementations encode
 absolute paths in their build scripts or rely on external plugins or libraries
-which may or man not be installed.  Thus, for some of them building might
+which may or may not be installed.  Thus, for some of them building might
 fail...
 
 Thereafter, the folder `models/` contains one xmi file per 101 implementation
@@ -150,6 +151,15 @@ In the `output/` directory, you'll get one...
   arrows with empty heads and dashed arrows with empty heads.  Usage
   relationships are shown as arrows with open heads.
 
+On my 4-years old dual core notebook, processing all 46 one-o-one
+implementations takes less than two minutes, i.e., approximately 3 seconds per
+implementation.  This time includes the loading of the models, the metric and
+ranking calculation, the UML-diagram generation, and spitting that stuff to
+files.  It does not include the time needed for building the 101
+implementations and parsing their java files using JaMoPPC.
+
+Just in case you have no time to run that stuff yourself, I've included a
+`sample-output.tar.xz` file in the repository which contains all result files.
 
 Well, that's it.  Have fun!
 
