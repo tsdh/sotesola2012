@@ -12,18 +12,24 @@ It tackles any 101 implementation that contains at least one java file.  Every
 such implementation is parsed to a java syntax graph by using
 [EMFText](http://www.emftext.org/index.php/EMFText)'s
 [JaMoPPC](http://www.jamopp.org) parser.  Thus, abstract java syntax graph are
-represented as huge EMF models.
+represented as EMF models.  The largest model, the one for the swing
+implementation, contains 115520 objects and 134479 references.
 
 To solve the two problems stated above, the
 [FunnyQT library](https://github.com/jgralab/funnyqt) is used.  FunnyQT is a
 model querying and transformation library for TGraphs and EMF models written in
 Clojure.
 
-For every class in each syntax graph, all six Kemerer and Chidamber complexity
-metrics are calculated, and a uml-alike diagram is generated showing all
-classes and interfaces including generalization, implementation, and usage
-relationships (a classifier uses another classifier if it has a field of the
-other's type or if it has a method whose return type is the other classifier).
+For every class in each syntax graph, all six **Kemerer and Chidamber
+complexity metrics** are calculated.  All metric values are aggregated over all
+101 implementations, and so you'll also get a ranking of the 10 most complex
+classes in the complete 101 corpus concerning each metric.
+
+Furthermore, for each 101 implementation, a **UML-alike diagram** is generated
+showing all classes and interfaces including generalization, implementation,
+and usage relationships.  Here, a classifier uses another classifier if it has
+a field of the other's type or if it has a method whose return type is the
+other classifier.
 
 See below how to run that stuff.
 
@@ -63,29 +69,19 @@ $ pwd
 /path/to/sotesola2012
 $ cd scripts/
 $ ./build-jamopp-graphs.sh ~/path/to/101repo/contributions
+Running make in antlrAcceptor...done!
 Building JaMoPP model for antlrAcceptor... failed!
+Running make in antlrLexer...done!
 Building JaMoPP model for antlrLexer... failed!
-Building JaMoPP model for antlrObjects... failed!
-Building JaMoPP model for antlrParser... failed!
-Building JaMoPP model for antlrTrees... failed!
-Building JaMoPP model for aspectJ... done!
-Building JaMoPP model for atl... done!
-Building JaMoPP model for dom... done!
+...
+Running ant in jgralab...done!
+Building JaMoPP model for jgralab... done!
+Building JaMoPP model for jsf... done!
+Building JaMoPP model for sax... done!
 ...
 ```
 
-Calculate the metrics and do the architecture recovery!  In `output/`, you'll
-get one...
-
-- ... txt file per 101 implementation which lists the Kemerer and Chidamber
-  metric values for any class of that implementation.  Actually, the *Depth Of
-  Inheritance Tree* and the *Number Of Children* metrics are calculated for
-  interfaces, too.
-
-- ... pdf file per 101 implementation which is a poor-man's UML class diagram.
-  Generalizations and realizations are shown in the usual UML style, i.e.,
-  arrows with empty heads and dashed arrows with empty heads.  Usage
-  relationships are shown as arrows with open heads.
+Then, calculate the metrics and do the architecture recovery!
 
 ```
 $ pwd
@@ -102,10 +98,27 @@ Processing #<File models/javaParseLib.xmi>
 ...
 ```
 
-That's it...
+In the `output/` directory, you'll get one...
+
+- ... txt file per 101 implementation which lists the Kemerer and Chidamber
+  metric values for any class of that implementation.  Actually, the *Depth Of
+  Inheritance Tree* and the *Number Of Children* metrics are calculated for
+  interfaces, too.
+
+- ... `OVERALL_SCORES.txt` file which contains a ranking of the 10 most complex
+  classes according to each metric.  The ranking shows the metric value, the
+  class with that value, and the 101 implementation that contains that class.
+
+- ... pdf file per 101 implementation which is a poor-man's UML class diagram.
+  Generalizations and realizations are shown in the usual UML style, i.e.,
+  arrows with empty heads and dashed arrows with empty heads.  Usage
+  relationships are shown as arrows with open heads.
+
+
+Well, that's it.  Have fun!
 
 ## License
 
-Copyright © 2012 Tassilo Horn
+Copyright © 2012 Tassilo Horn <horn@uni-koblenz.de>
 
 Distributed under the General Public License, Version 3 or later.
