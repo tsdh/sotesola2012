@@ -73,6 +73,9 @@ it'll take care of every other dependency needed.  Simply download the `lein`
 script [here](https://raw.github.com/technomancy/leiningen/preview/bin/lein),
 make it executable, and place it somewhere on your `PATH`.
 
+Since the metrics calculation uses the ForkJoin framework for parallelizing the
+computation, you need a JDK7 (or newer).
+
 Oh, and for the diagram generation, you also need the
 [GraphViz](http://www.graphviz.org/) program `dot` somewhere on your `PATH`.
 The parser invocation script `build-jamopp-graphs.sh` is a BASH script, so
