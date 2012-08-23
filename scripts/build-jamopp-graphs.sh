@@ -30,9 +30,29 @@ dir101=${1}
 cd ${dir101}
 declare -a pdirs
 pdirs=`find . -name '*.java' | cut -d/ -f2 | sort | uniq`
-cd -
+cd - &> /dev/null
 
 for pdir in ${pdirs}; do
+    cd ${dir101}/${pdir}
+    if [[ -f build.xml ]]; then
+	echo -n "Running ant in ${pdir}..."
+	ant &> /dev/null
+	if [[ $? -ne 0 ]]; then
+	    echo "failed!"
+	else
+	    echo "done!"
+	fi
+    elif [[ -f Makefile ]]; then
+	echo -n "Running make in ${pdir}..."
+	make &> /dev/null
+	if [[ $? -ne 0 ]]; then
+	    echo "failed!"
+	else
+	    echo "done!"
+	fi
+    fi
+    cd - &> /dev/null
+
     echo -n "Building JaMoPP model for ${pdir}... "
     jamoppc ${dir101}/${pdir} \
 	../models/${pdir}.xmi \
