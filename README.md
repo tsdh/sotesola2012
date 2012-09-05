@@ -20,6 +20,9 @@ To solve the two problems stated above, the
 model querying and transformation library for TGraphs and EMF models written in
 Clojure.
 
+A video of me demonstrating this project is available
+[at youtube](http://www.youtube.com/watch?v=_LR0D3aN85E).
+
 ### Kemerer and Chidamber Complexity Metrics
 
 For every class in each syntax graph, all six **Kemerer and Chidamber
